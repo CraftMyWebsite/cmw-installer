@@ -67,7 +67,10 @@ function downloadZip(): void
     //Get archive
     $data = getData();
 
-    file_put_contents($zipName, fopen($data['file_download'], 'rb'));
+    if (!file_put_contents($zipName, fopen($data['file_download'], 'rb'))){
+        echo "Unable to download CraftMyWebsite";
+        return;
+    }
 
     //Unzip archive
     unzip($zipName);
@@ -103,7 +106,7 @@ function unzip(string $zipName): void
 
         header('location: installer');
     } else {
-        echo 'Error with cmw.zip';
+        echo "Unable to open cmw.zip";
     }
 }
 
