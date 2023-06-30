@@ -23,7 +23,7 @@ $extensionsRequired = ["curl", "zip", "json", "PDO", "fileinfo", "mbstring"];
  * LANG AREA
  */
 $availableLang = ["fr" => "Français", "en" => "English"];
-$selectedLang = $_SESSION['cmwDownloadLang'] ?? "en";
+$selectedLang = $_SESSION['cmwDownloadLang'] ?? "fr";
 $translationList = [
     "fr" => [
         "title" => "Téléchargement de CraftMyWebsite",
@@ -67,7 +67,17 @@ function downloadZip(): void
     //Get archive
     $data = getData();
 
-    if (!file_put_contents($zipName, fopen($data['file_download'], 'rb'))){
+    if ($data === null){
+        echo 'Error when downloading data';
+        return;
+    }
+
+    if (!isset($data->file_download)) {
+        echo 'Unable to find download file.';
+        return;
+    }
+
+    if (!file_put_contents($zipName, fopen($data->file_download, 'rb'))) {
         echo "Unable to download CraftMyWebsite";
         return;
     }
@@ -76,24 +86,57 @@ function downloadZip(): void
     unzip($zipName);
 }
 
-function getData(): array
+function getData(): ?stdClass
 {
     $url = 'https://apiv2.craftmywebsite.fr/cms/oneClickInstall'; // TODO Real API Download URL
 
-    $options = array(
-        'http' => array(
-            'method' => "GET",
-            'ignore_errors' => true,
-        )
-    );
+//    $options = array(
+//        'http' => array(
+//            'method' => "GET",
+//            'timeout' => 1,
+//            'ignore_errors' => true,
+//        ),
+//    );
+//
+//    $context = stream_context_create($options);
+//
+//    try {
+//        if (!$data = @file_get_contents($url, false, $context)){
+//            $error = error_get_last();
+//            echo "Error: " . $error['message'];
+//            return [];
+//        }
+//        return json_decode($data, JSON_THROW_ON_ERROR, 512, JSON_THROW_ON_ERROR);
+//    } catch (JsonException) {
+//        return [];
+//    }
 
-    $context = stream_context_create($options);
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_VERBOSE, 1);
+    curl_setopt($ch, CURLOPT_AUTOREFERER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    if ($httpCode !== 200) {
+        echo "Error $httpCode when downloading file";
+        return null;
+    }
+
 
     try {
-        return json_decode(file_get_contents($url, false, $context), JSON_THROW_ON_ERROR, 512, JSON_THROW_ON_ERROR);
-    } catch (JsonException) {
-        return [];
+        $toReturn = json_decode($response, false, 512, JSON_THROW_ON_ERROR);
+        print_r($toReturn);
+        curl_close($ch);
+        return $toReturn;
+    } catch (JsonException $e) {
+        echo $e;
+        return null;
     }
+
 }
 
 function unzip(string $zipName): void
