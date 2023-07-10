@@ -15,6 +15,7 @@
  *
  ****/
 $minPhpVersion = 8.1;
+$currentPhpVersion = PHP_VERSION;
 $installerVersion = 2.0;
 
 $extensionsRequired = ["curl", "zip", "json", "PDO", "fileinfo", "mbstring"];
@@ -31,7 +32,10 @@ $translationList = [
         "downloadTitle" => "Télécharger CraftMyWebsite",
         "p1" => "Commencez dès maintenant votre nouvelle histoire avec <a href='https://craftmywebsite.fr' target='_blank'>CraftMyWebsite</a>.",
         "p2" => "Téléchargez dès maintenant CraftMyWebsite pour procéder à la configuration de votre site",
-        "downloadBtn" => "Commencer dès maintenant"
+        "downloadBtn" => "Commencer dès maintenant",
+        "minVersionTitle" => "Votre version PHP $currentPhpVersion n'est pas compatible. Merci d'utiliser au minimum la 
+        version $minPhpVersion",
+        "refresh" => "Rafraichir la page",
     ],
     "en" => [
         "title" => "Downloading CraftMyWebsite",
@@ -39,7 +43,9 @@ $translationList = [
         "downloadTitle" => "Download CraftMyWebsite",
         "p1" => "Start your new story now with <a href='https://craftmywebsite.fr' target='_blank'>CraftMyWebsite</a>.",
         "p2" => "Download now CraftMyWebsite to proceed to the configuration of your site",
-        "downloadBtn" => "Start now"
+        "downloadBtn" => "Start now",
+        "minVersionTitle" => "Your PHP version $currentPhpVersion is not compatible. Please use mini PHP version $minPhpVersion",
+        "refresh" => "Rafraichir la page",
     ]
 ];
 $translation = $translationList[$selectedLang];
@@ -67,7 +73,7 @@ function downloadZip(): void
     //Get archive
     $data = getData();
 
-    if ($data === null){
+    if ($data === null) {
         echo 'Error when downloading data';
         return;
     }
@@ -176,21 +182,30 @@ function unzip(string $zipName): void
          alt="CMW Logo">
 
     <div class="card">
-        <div class="content">
-            <h3><?= $translation['downloadTitle'] ?></h3>
+        <?php if (PHP_VERSION >= $minPhpVersion): ?>
+            <div class="content">
+                <h3><?= $translation['downloadTitle'] ?></h3>
 
-            <hr class="spacer">
+                <hr class="spacer">
 
-            <p><?= $translation['p1'] ?></p>
-            <p><?= $translation['p2'] ?></p>
+                <p><?= $translation['p1'] ?></p>
+                <p><?= $translation['p2'] ?></p>
 
-            <form method="POST" action="">
-                <input type="hidden" name="downloadBtn">
-                <button class="downloadButton"><?= $translation['downloadBtn'] ?></button>
-            </form>
-        </div>
+                <form method="POST" action="">
+                    <input type="hidden" name="downloadBtn">
+                    <button class="downloadButton"><?= $translation['downloadBtn'] ?></button>
+                </form>
+            </div>
+        <?php else: ?>
+            <div class="content" id="mainContent">
+                <h3><?= $translation['minVersionTitle'] ?></h3>
+
+                <button class="downloadButton" onclick="location.reload()">
+                    <?= $translation['refresh'] ?>
+                </button>
+            </div>
+        <?php endif; ?>
     </div>
-
 </div>
 
 </body>
