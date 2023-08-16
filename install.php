@@ -14,7 +14,7 @@
  * VARS
  *
  ****/
-$minPhpVersion = 8.1;
+$minPhpVersion = 8.2;
 $currentPhpVersion = PHP_VERSION;
 $installerVersion = 2.0;
 
