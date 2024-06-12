@@ -153,7 +153,7 @@ function unzip(string $zipName): void
 
 <div class="container">
     <img class="logo"
-         src="https://reborn.craftmywebsite.fr/Public/Uploads/Images/logo_dark.png"
+         src="https://reborn.craftmywebsite.fr/Public/Uploads/Images/logo_light.png"
          alt="CMW Logo">
 
     <div class="card">
