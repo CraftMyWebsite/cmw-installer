@@ -46,7 +46,7 @@ $translationList = [
         "downloadBtn" => "Start now",
         "minVersionTitle" => "Your PHP version $currentPhpVersion is not compatible. Please use mini PHP version $minPhpVersion",
         "refresh" => "Rafraichir la page",
-    ]
+    ],
 ];
 $translation = $translationList[$selectedLang];
 
@@ -94,15 +94,15 @@ function downloadZip(): void
 
 function getData(): ?stdClass
 {
-    $url = 'https://apiv2.craftmywebsite.fr/cms/oneClickInstall'; // TODO Real API Download URL
+    $url = 'https://apiv2.craftmywebsite.fr/v1/cms/oneClickInstall'; // TODO Real API Download URL
 
-    $options = array(
-        'http' => array(
-            'method' => "GET",
+    $options = [
+        'http' => [
+            'method' => "PUT",
             'timeout' => 1,
             'ignore_errors' => true,
-        ),
-    );
+        ],
+    ];
 
     $context = stream_context_create($options);
 
@@ -143,7 +143,7 @@ function unzip(string $zipName): void
 <html lang="<?= $selectedLang ?>">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="" href="https://reborn.craftmywebsite.fr/public/uploads/logo/favicon.ico">
+    <link rel="icon" type="" href="https://reborn.craftmywebsite.fr/Public/Uploads/Favicon/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="NOINDEX, NOFOLLOW">
     <meta name="description" content="<?= $translation['desc'] ?>">
@@ -153,7 +153,7 @@ function unzip(string $zipName): void
 
 <div class="container">
     <img class="logo"
-         src="https://reborn.craftmywebsite.fr/public/uploads/logo/logo_compact.png"
+         src="https://reborn.craftmywebsite.fr/Public/Uploads/Images/logo_dark.png"
          alt="CMW Logo">
 
     <div class="card">
