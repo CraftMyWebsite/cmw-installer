@@ -35,7 +35,7 @@ $translationList = [
         "downloadBtn" => "Commencer dès maintenant",
         "minVersionTitle" => "Votre version PHP $currentPhpVersion n'est pas compatible. Merci d'utiliser au minimum la 
         version $minPhpVersion",
-        "refresh" => "Rafraichir la page",
+        "refresh" => "Actualiser la page",
     ],
     "en" => [
         "title" => "Downloading CraftMyWebsite",
@@ -45,7 +45,7 @@ $translationList = [
         "p2" => "Download now CraftMyWebsite to proceed to the configuration of your site",
         "downloadBtn" => "Start now",
         "minVersionTitle" => "Your PHP version $currentPhpVersion is not compatible. Please use mini PHP version $minPhpVersion",
-        "refresh" => "Rafraichir la page",
+        "refresh" => "Refresh page",
     ],
 ];
 $translation = $translationList[$selectedLang];
