@@ -14,9 +14,9 @@
  * VARS
  *
  ****/
-$minPhpVersion = 8.2;
+$minPhpVersion = 8.3;
 $currentPhpVersion = PHP_VERSION;
-$installerVersion = 2.0;
+$installerVersion = '2.0-alpha-01';
 
 $extensionsRequired = ["curl", "zip", "json", "PDO", "fileinfo", "mbstring"];
 
@@ -94,7 +94,7 @@ function downloadZip(): void
 
 function getData(): ?stdClass
 {
-    $url = 'https://apiv2.craftmywebsite.fr/v1/cms/oneClickInstall'; // TODO Real API Download URL
+    $url = 'https://apiv2.craftmywebsite.fr/v1/cms/oneClickInstall';
 
     $options = [
         'http' => [
@@ -143,7 +143,7 @@ function unzip(string $zipName): void
 <html lang="<?= $selectedLang ?>">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="" href="https://reborn.craftmywebsite.fr/Public/Uploads/Favicon/favicon.ico">
+    <link rel="icon" type="" href="https://craftmywebsite.fr/Public/Uploads/Favicon/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="NOINDEX, NOFOLLOW">
     <meta name="description" content="<?= $translation['desc'] ?>">
@@ -153,7 +153,7 @@ function unzip(string $zipName): void
 
 <div class="container">
     <img class="logo"
-         src="https://reborn.craftmywebsite.fr/Public/Uploads/Images/logo_light.png"
+         src="https://craftmywebsite.fr/Public/Uploads/Images/logo_light.png"
          alt="CMW Logo">
 
     <div class="card">
