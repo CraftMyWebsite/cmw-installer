@@ -16,7 +16,7 @@
  ****/
 $minPhpVersion = 8.3;
 $currentPhpVersion = PHP_VERSION;
-$installerVersion = '2.0-alpha-01';
+$installerVersion = '2.0-alpha-02';
 
 $extensionsRequired = ["curl", "zip", "json", "PDO", "fileinfo", "mbstring"];
 
@@ -153,7 +153,7 @@ function unzip(string $zipName): void
 
 <div class="container">
     <img class="logo"
-         src="https://craftmywebsite.fr/Public/Uploads/Images/logo_light.png"
+         src="https://craftmywebsite.fr/Admin/Resources/Assets/Img/logo_compact.png"
          alt="CMW Logo">
 
     <div class="card">
